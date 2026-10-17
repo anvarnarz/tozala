@@ -25,6 +25,14 @@ iconutil -c icns $ICONSET -o "$APP/Contents/Resources/AppIcon.icns"
 codesign --force --deep --sign - "$APP"   # ad-hoc: fine for this Mac
 
 [[ "${1:-}" == "--no-install" ]] && { echo "Built $APP"; exit 0; }
+
+# Installer: a disk image with the app next to an Applications shortcut, to drag across
+if [[ "${1:-}" == "--dmg" ]]; then
+  STAGE=build/dmg && rm -rf $STAGE build/Tozala.dmg && mkdir $STAGE
+  cp -R "$APP" $STAGE/ && ln -s /Applications $STAGE/Applications
+  hdiutil create -quiet -volname "Tozala $VERSION" -srcfolder $STAGE -fs APFS -format ULFO build/Tozala.dmg
+  rm -rf $STAGE && echo "Built build/Tozala.dmg" && exit 0
+fi
 pkill -x Tozala 2>/dev/null || true
 rm -rf "$DEST/Tozala.app" && cp -R "$APP" "$DEST/"
 /System/Library/CoreServices/Frameworks/LaunchServices.framework/Support/lsregister -f "$DEST/Tozala.app" 2>/dev/null \

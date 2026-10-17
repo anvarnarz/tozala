@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-17 — 0.1.1 DMG installer
+
+### Added
+- `Tozala.dmg` installer: open it and drag Tozala onto Applications. Build it with `./build.sh --dmg`.
+
 ## 2026-10-17 — 0.1.0 First release
 
 ### Added

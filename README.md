@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/anvarnarz/tozala/releases/latest/download/Tozala.zip"><b>⬇ Download for macOS</b></a>
+  <a href="https://github.com/anvarnarz/tozala/releases/latest/download/Tozala.dmg"><b>⬇ Download for macOS</b></a>
   &nbsp;·&nbsp; Apple silicon · macOS 15+
 </p>
 
@@ -50,7 +50,7 @@
 
 ## Install
 
-1. [Download Tozala.zip](https://github.com/anvarnarz/tozala/releases/latest/download/Tozala.zip), unzip it, and move **Tozala.app** to **Applications**.
+1. [Download Tozala.dmg](https://github.com/anvarnarz/tozala/releases/latest/download/Tozala.dmg), open it, and drag **Tozala** onto the **Applications** folder.
 2. Open it once. The app isn't notarized, so macOS blocks the first launch: go to **System Settings → Privacy & Security** and click **Open Anyway**.
 3. To see the Bin's size, give Tozala **Full Disk Access** (the app links you there when it's needed).
 
@@ -62,7 +62,7 @@ Needs only Command Line Tools (`xcode-select --install`).
 ./build.sh
 ```
 
-This compiles the app, draws the icon, signs it ad-hoc, and installs it to `/Applications`. Use `./build.sh --no-install` to only build into `build/`.
+This compiles the app, draws the icon, signs it ad-hoc, and installs it to `/Applications`. Use `./build.sh --no-install` to only build into `build/`, or `./build.sh --dmg` to make the installer `build/Tozala.dmg`.
 
 Run the engine self-test (works in a temp folder, never on your data):
 
