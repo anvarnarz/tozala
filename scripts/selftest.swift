@@ -90,7 +90,9 @@ func check(_ ok: Bool, _ msg: String = "") { if !ok { print("FAIL: \(msg)"); exi
         try fm.createDirectory(at: dir, withIntermediateDirectories: true)
         try data.write(to: dir.appendingPathComponent("dev.example.helper.plist"))
         let login = Cleaner.scanLogin(dirs: [dir], disabled: disabled)
-        check(login.count == 1 && !login[0].enabled && login[0].detail == "/opt/helper/run", "\(login)")
+        check(login.count == 1 && !login[0].enabled && login[0].name == "run" && login[0].detail == "dev.example.helper", "\(login)")
+        check(Cleaner.owningApp("/Applications/OneDrive.app/Contents/SyncReporter.app/Contents/MacOS/SyncReporter")?.path == "/Applications/OneDrive.app", "outermost app")
+        check(Cleaner.owningApp("/opt/homebrew/bin/postgres") == nil, "no app")
         print("✓ login: plist + print-disabled parsing")
         print("ALL OK")
     }

@@ -39,7 +39,7 @@
 | **Bin** | Everything in `~/.Trash` | Empty Bin (permanent, asks first) |
 | **Unused apps** | Apps in `/Applications` and `~/Applications` not opened in 90 days | Move to Bin |
 | **Large files** | Files of 500 MB or more in your home folder (outside `~/Library`) | Move to Bin, or reveal in Finder |
-| **Login items** | Launch agents in `~/Library/LaunchAgents` and `/Library/LaunchAgents` | Turn off / on (`launchctl disable`, reversible) |
+| **Login items** | Background agents (shown by app name) in `~/Library/LaunchAgents` and `/Library/LaunchAgents` | Turn off / on (`launchctl disable`, reversible) |
 
 ## Safe by default
 

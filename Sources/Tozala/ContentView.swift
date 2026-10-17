@@ -329,7 +329,8 @@ private struct ItemRow: View {
         case .bin:
             Image(systemName: "trash").font(.system(size: 16)).foregroundStyle(Theme.accentInk)
         case .login:
-            Image(systemName: "power").font(.system(size: 16)).foregroundStyle(Theme.accentInk)
+            if let app = item.app { Image(nsImage: NSWorkspace.shared.icon(forFile: app.path)).resizable() }
+            else { Image(systemName: "power").font(.system(size: 16)).foregroundStyle(Theme.accentInk) }
         }
     }
 }

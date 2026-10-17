@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-17 — 0.1.2 Readable login items
+
+### Changed
+- Login items show the app name and icon (e.g. *OneDrive*, *Logi Options+*) instead of the raw launchd label, which moves to the subtitle. Plain scripts show their file name.
+
 ## 2026-10-17 — 0.1.1 DMG installer
 
 ### Added

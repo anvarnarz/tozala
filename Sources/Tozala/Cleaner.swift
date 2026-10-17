@@ -10,6 +10,7 @@ struct Item: Identifiable, Hashable {
     let detail: String     // e.g. path, "Last used 4 months ago", program path
     let size: Int64        // bytes; 0 for login items
     var enabled = true     // login items only
+    var app: URL? = nil    // login items only: the app the agent belongs to, for its icon
 }
 
 struct ScanResult { var items: [Item]; var needsFullDiskAccess = false }
@@ -145,10 +146,19 @@ enum Cleaner {
         for dir in dirs {
             for url in children(dir) where url.pathExtension == "plist" {
                 guard let data = try? Data(contentsOf: url), let agent = parseAgent(data), !agent.label.hasPrefix("com.apple.") else { continue }
-                items.append(Item(id: url, name: agent.label, detail: agent.program, size: 0, enabled: !disabled.contains(agent.label)))
+                let app = owningApp(agent.program)
+                let name = app.map { (FileManager.default.displayName(atPath: $0.path) as NSString).deletingPathExtension }
+                    ?? (agent.program.isEmpty ? agent.label : (agent.program as NSString).lastPathComponent)
+                items.append(Item(id: url, name: name, detail: agent.label, size: 0, enabled: !disabled.contains(agent.label), app: app))
             }
         }
         return items.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
+
+    /// Outermost `.app` in a program path: `/Applications/OneDrive.app/Contents/SyncReporter.app/…` → OneDrive.app.
+    static func owningApp(_ program: String) -> URL? {
+        guard let r = program.range(of: ".app/") ?? (program.hasSuffix(".app") ? program.range(of: ".app", options: .backwards) : nil) else { return nil }
+        return URL(fileURLWithPath: String(program[..<r.upperBound]).replacingOccurrences(of: ".app/", with: ".app"))
     }
 
     // MARK: - Parsing
